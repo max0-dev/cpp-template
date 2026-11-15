@@ -2,6 +2,7 @@
 
 #include <fmt/format.h>
 
+#include <string>
 #include <utility>
 
 namespace Core {
