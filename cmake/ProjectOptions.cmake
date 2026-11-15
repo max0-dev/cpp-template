@@ -20,7 +20,13 @@ function(project_setup_target target)
     endif()
 
     if(ENABLE_SANITIZERS)
-        target_compile_options(${target} PRIVATE -fsanitize=address,undefined -fno-omit-frame-pointer)
+        # -fno-sanitize-recover=all: abort on the first UBSan report (like ASan) instead of
+        # printing and continuing, so a test that triggers UB fails.
+        target_compile_options(${target} PRIVATE
+            -fsanitize=address,undefined
+            -fno-sanitize-recover=all
+            -fno-omit-frame-pointer
+        )
         target_link_options(${target} PRIVATE -fsanitize=address,undefined)
     endif()
 endfunction()
